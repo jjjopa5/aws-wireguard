@@ -10,6 +10,7 @@ resource "aws_instance" "wireguard" {
   vpc_security_group_ids      = [aws_security_group.wireguard.id]
   key_name                    = aws_key_pair.wireguard.key_name
   associate_public_ip_address = true
+  ipv6_address_count          = 1
 
   tags = {
     Name = "wireguard-server"
