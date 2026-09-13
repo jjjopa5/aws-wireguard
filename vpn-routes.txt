@@ -33,6 +33,10 @@
 173.194.0.0/16
 # one.google.com — страница подписки Google AI
 209.85.128.0/17
+# gemini.google — лендинг и страница загрузки десктопного приложения
+216.239.32.0/19
+# storage.googleapis.com, update.googleapis.com — раздача файлов и апдейты
+64.233.160.0/19
 # content-push.googleapis.com — стриминг ответов
 172.217.0.0/16
 # lh3.googleusercontent.com — аватарки
