@@ -31,6 +31,8 @@
 108.177.0.0/17
 # clients6.google.com, fonts.gstatic.com
 173.194.0.0/16
+# one.google.com — страница подписки Google AI
+209.85.128.0/17
 # content-push.googleapis.com — стриминг ответов
 172.217.0.0/16
 # lh3.googleusercontent.com — аватарки
