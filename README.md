@@ -61,9 +61,12 @@ ssh -i ~/.ssh/personal ubuntu@НОВЫЙ 'sudo systemctl enable --now wg-quick@w
   правки Endpoint нужно сначала снести кеш: `rm /tmp/vpn-routes.cache`.
 - **iPhone / iPad владельца** — приватных ключей на сервере нет, Endpoint правится
   руками в приложении.
-- **Остальные пиры** (Shpakovskiy Maxim ×2, Danik, Anton) — тоже правка одного поля.
+- **Остальные пиры** (Shpakovskiy Maxim ×2, Danik, Anton ×2) — тоже правка одного поля.
   Приватные ключи Danik, Anton и телефона Максима лежат на сервере в `/etc/wireguard`,
   так что при необходимости их конфиги можно пересобрать и отдать QR через `qrencode`.
+- **Alesya** (телефон `10.8.0.10`, мак `10.8.0.11`) — добавлена 14.10.2026, уже после
+  переезда, так что конфиги сразу с новым Endpoint и править в них нечего. Приватные
+  ключи тоже на сервере: `/etc/wireguard/alesya-phone.key` и `alesya-mac.key`.
 
 ## Доступ на сервер
 
