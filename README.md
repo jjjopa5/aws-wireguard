@@ -59,6 +59,9 @@ ssh -i ~/.ssh/personal ubuntu@НОВЫЙ 'sudo systemctl enable --now wg-quick@w
 - **Mac** — конфиг перегенерирует `~/update-vpn-routes.sh` (Endpoint и ключ сервера
   зашиты в нём). Скрипт выходит молча, если `vpn-routes.txt` не менялся, поэтому после
   правки Endpoint нужно сначала снести кеш: `rm /tmp/vpn-routes.cache`.
+  Сам конфиг лежит в `/etc/wireguard/wg0.conf` (не в `/opt/homebrew/etc/wireguard`).
+  Туннель поднимает при загрузке LaunchDaemon `com.wireguard.wg0` (`RunAtLoad`, без
+  `KeepAlive`), а LaunchAgent `com.vpn.update-routes` гоняет скрипт в 12:00 и 23:00.
 - **iPhone / iPad владельца** — приватных ключей на сервере нет, Endpoint правится
   руками в приложении.
 - **Остальные пиры** (Shpakovskiy Maxim ×2, Danik, Anton ×2) — тоже правка одного поля.
@@ -67,6 +70,34 @@ ssh -i ~/.ssh/personal ubuntu@НОВЫЙ 'sudo systemctl enable --now wg-quick@w
 - **Alesya** (телефон `10.8.0.10`, мак `10.8.0.11`) — добавлена 14.10.2026, уже после
   переезда, так что конфиги сразу с новым Endpoint и править в них нечего. Приватные
   ключи тоже на сервере: `/etc/wireguard/alesya-phone.key` и `alesya-mac.key`.
+- **Nastya** (телефон `10.8.0.12`, компьютер `10.8.0.13`) — добавлена 12.11.2026.
+  Приватные ключи на сервере: `/etc/wireguard/nastya-phone.key` и `nastya-pc.key`.
+  В её конфиг попали все маршруты из `vpn-routes.txt`, включая API k8s-лаба.
+
+## PayPal: весь трафик через Франкфурт
+
+PayPal целиком сидит на CDN (Fastly `151.101.0.0/16` и Cloudflare), а его собственные
+сети из `AS17012` сайтом не используются. Завернуть его в split-туннель надёжно нельзя:
+адреса CDN плавают, а при промахе запрос молча уходит напрямую, и антифрод видит одну
+сессию из двух стран. Поэтому для PayPal отдельные профили с `AllowedIPs = 0.0.0.0/0, ::/0`,
+которые включаются только на время работы с ним.
+
+- **iPhone владельца** — пир `10.8.0.14`, профиль `PayPal` в приложении WireGuard.
+  Ключ на сервере: `/etc/wireguard/owner-iphone-paypal.key`.
+- **Mac владельца** — пир `10.8.0.15`, конфиг `/etc/wireguard/paypal.conf` рядом с `wg0.conf`.
+  Ключ на сервере: `/etc/wireguard/owner-mac-paypal.key`.
+
+На маке переключение — функциями из `~/.bash_profile`:
+
+```bash
+vpn-paypal   # погасить split, поднять PayPal-профиль
+vpn-normal   # обратно на split
+curl -s https://ifconfig.me; echo   # 63.188.144.22 — значит, выход из Франкфурта
+```
+
+Автозапуск не трогали: после загрузки всегда поднимается обычный split-профиль, так что
+PayPal-режим не залипает после перезагрузки. Если в 12:00 или 23:00 скрипт обновления
+маршрутов поднимет `wg0` поверх PayPal-профиля, это безопасно — оба ведут на один сервер.
 
 ## Доступ на сервер
 
