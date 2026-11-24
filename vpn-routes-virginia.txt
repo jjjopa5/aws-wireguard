@@ -35,3 +35,6 @@
 # mail.com: account creation page and sign-up form
 217.72.199.68/32
 74.208.232.226/32
+
+# mail.com address suggestions (register-suggest.mail.com)
+74.208.232.215/32
