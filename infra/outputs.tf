@@ -1,5 +1,5 @@
 output "server_ip" {
-  description = "Elastic IP — новый Endpoint для всех пиров."
+  description = "Публичный IPv4-адрес WireGuard-сервера."
   value       = aws_eip.wireguard.public_ip
 }
 
@@ -13,6 +13,6 @@ output "ssh_command" {
 }
 
 output "server_ipv6" {
-  description = "Глобальный IPv6 сервера. Новый префикс — старый 2a05:d014:1c16:5b00::/56 остаётся в старом аккаунте."
+  description = "Глобальный IPv6-адрес сервера для исходящих соединений."
   value       = length(aws_instance.wireguard.ipv6_addresses) > 0 ? aws_instance.wireguard.ipv6_addresses[0] : "не назначен"
 }

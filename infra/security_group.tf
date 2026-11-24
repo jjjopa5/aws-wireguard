@@ -10,7 +10,7 @@ resource "aws_security_group" "wireguard" {
   }
 }
 
-# Как на старом сервере — SSH открыт наружу. Белый IP у владельца динамический,
+# SSH открыт наружу. Белый IP у владельца динамический,
 # сузить до /32 значит рисковать локаутом при смене адреса.
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
   security_group_id = aws_security_group.wireguard.id

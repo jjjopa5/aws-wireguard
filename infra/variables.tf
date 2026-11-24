@@ -9,19 +9,19 @@ variable "az" {
 }
 
 variable "aws_profile" {
-  description = "Профиль нового аккаунта 347288885877. Старый 229535221334 доживает свои кредиты."
+  description = "Профиль AWS для европейского туннеля."
   type        = string
   default     = "k8s-lab-admin"
 }
 
 variable "instance_type" {
-  description = "Один в один со старым сервером."
+  description = "Тип EC2-инстанса WireGuard."
   type        = string
   default     = "t3.micro"
 }
 
 variable "root_size_gb" {
-  description = "На старом сервере 8 GB; там же лежали docker-образы бота, которые сюда не едут."
+  description = "Размер корневого тома EC2 в GiB."
   type        = number
   default     = 8
 }

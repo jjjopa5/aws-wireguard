@@ -26,8 +26,7 @@ resource "aws_instance" "wireguard" {
   key_name               = aws_key_pair.wireguard.key_name
   ipv6_address_count     = 1
 
-  # Ставит только пакеты и форвардинг. Ключи и wg0.conf приезжают со старого
-  # сервера отдельно — в user_data им не место.
+  # Устанавливает пакеты и включает форвардинг. Ключи и wg0.conf восстанавливаются отдельно.
   user_data = <<-EOT
     #!/bin/bash
     set -eux
@@ -59,8 +58,7 @@ resource "aws_instance" "wireguard" {
   }
 }
 
-# Endpoint для клиентов. Между аккаунтами EIP не переносится — старый
-# 18.156.108.6 останется в 229535221334, у пиров меняется строка Endpoint.
+# Постоянный IPv4-адрес, который клиенты используют как Endpoint.
 resource "aws_eip" "wireguard" {
   domain = "vpc"
 
